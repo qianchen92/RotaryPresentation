@@ -1,0 +1,40 @@
+\begin{frame}{Signature}
+  \begin{figure}
+    \tiny
+    \begin{centering}
+      \begin{tikzpicture}
+        \node (E) at (0,0)[minimum width = 1.5 cm, minimum height = 1.5cm]{\includegraphics[width = 0.1\textwidth]{images/Alice.png}};
+        \node (D) at (5,0)[minimum width = 1.5 cm, minimum height = 1.5cm]{\includegraphics[width = 0.1\textwidth]{images/Bob.png}}; 
+
+        \pause
+        
+        \node (ke)[text width = 3.5cm, text centered] at (0,1.5){Clef de signature};
+        \path (ke) edge [->] (E.north);
+
+        \node (kd) at (5,1.5){Clef de v\'erification};
+        \path (kd) edge [->] (D.north);
+        
+        \pause
+        \node (m) at (-2.5,0){Message $m$};
+        \path (m) edge [->] (E);
+
+        \pause
+
+        \path (E) edge[->] node[above]{Signature $\sigma$}(D);
+        
+        \pause
+        
+        \node (m2) at (5,-1.5){Vrai ou Faux};
+        \path (D) edge [->] (m2);
+        
+      \end{tikzpicture}
+    \end{centering}
+  \end{figure}
+  
+  
+
+  \visible<6->{Un sch\'ema de signature $Sig = (KeyGen, Sign, Verify)$.}
+  
+
+  \visible<7->{Correction : $(sk, vk) \gets KeyGen(\lambda)$, $Verify(vk, Sign(sk, m)) = Vrai$}
+\end{frame}

@@ -1,0 +1,132 @@
+\begin{frame}{Construction of our RCCA scheme}
+  
+  \begin{figure}
+    \begin{centering}
+      \begin{tikzpicture}
+        \node (E) at (0,0)[minimum width = 1.5 cm, minimum height = 1.5cm]{\includegraphics[width = 0.1\textwidth]{images/Alice.png}};
+        \node (D) at (8,0)[minimum width = 1.5 cm, minimum height = 1.5cm]{\includegraphics[width = 0.1\textwidth]{images/Bob.png}};
+
+        \node (M) at (4,0)[minimum width = 1.5 cm, minimum height = 1.5cm]{\includegraphics[width = 0.1\textwidth]{images/Merlin.jpg}};
+        \path (E) edge[->] node[above]{$c$}(M);
+        \node (f) at (4,2){ReRandom};
+        \path (f) edge [->] (M);
+        \path (M) edge [->] node[above]{$c'$}(D);
+        \node (m3) at (8,-2){$m$};
+        \path (D) edge [->] (m3);
+
+        \node (ke) at (0,2){$\PPP_{ibe}, \PPP_{sig}, \PPP_{enc}, \pk_{enc}, \pk_{ibe}$};
+        \path (ke) edge [->] (E.north);
+
+        \node (kd) at (8,2){$\msk_{ibe}, \sk_{enc}$};
+        \path (kd) edge [->] (D.north);
+        
+        \node (m) at (-2,0.5){$m$};
+        \path (m) edge [->] ([yshift = 0.5cm]E.west);
+        \node (r) at (-2,-0.5){$r$};
+        \path (r) edge [->] ([yshift = -0.5cm]E.west);
+
+      \end{tikzpicture}
+    \end{centering}
+  \end{figure}
+
+
+\end{frame}
+
+
+\begin{frame}{Construction: Outline of the encryption algorithm}
+  \begin{description}
+  \item[\boldmath{$Enc(\PPP, \PK, m)$}]:
+    \begin{enumerate}      
+    \item $(\sk_{sig}, \vk_{sig}) \gets \KeyGen(\PPP_{sig})$.
+    \item $ c_m \gets \Enc_{ibe}(\PPP_{ibe}, id = \vk_{sig}, m)$.
+    \item $c_1 \gets \Enc_{ibe}(\PPP_{ibe}, \vk_{sig}, 1_\G)$. 
+    \item $\sigma_1 \gets \Sig_{sig}(\sk_{sig}, (1,c_1))$ and $\sigma_m \gets \Sig_{sig}(\sk_{sig}, (g,c_m))$ 
+    \item $c_{\vk} = Enc(\PPP_{enc}, \pk_{enc}, \vk_{sig})$.
+    \item $c_{\sigma_1} \gets Enc(\PPP_{enc}, \pk_{enc}, \sigma_1)$
+    \item $c_{\sigma_m} \gets Enc(\PPP_{enc}, \pk_{enc}, \sigma_m)$
+    \item $c = (c_1, c_m, c_{\sigma_1}, c_{\sigma_m}, c_{\vk})$.
+    \end{enumerate}
+  \end{description}
+  
+\end{frame}
+
+\begin{frame}{Some remarks}
+
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \tiny
+          {\boldmath{$Enc(\PPP, \PK, m)$}:}          
+          \begin{enumerate}      
+          \item $(\sk_{sig}, \vk_{sig}) \gets \KeyGen(\PPP_{sig})$.
+          \item $ c_m \gets \Enc_{ibe}(\PPP_{ibe}, id = \vk_{sig}, m)$.
+          \item $c_1 \gets \Enc_{ibe}(\PPP_{ibe}, \vk_{sig}, 1_\G)$. 
+          \item $\sigma_1 \gets \Sig_{sig}(\sk_{sig}, (1,c_1))$ and $\sigma_m \gets \Sig_{sig}(\sk_{sig}, (g,c_m))$ 
+          \item $c_{\vk} \gets Enc(\PPP_{enc}, \pk_{enc}, \vk_{sig})$.
+          \item $c_{\sigma_1} \gets Enc(\PPP_{enc}, \pk_{enc}, \sigma_1)$
+          \item $c_{\sigma_m} \gets Enc(\PPP_{enc}, \pk_{enc}, \sigma_m)$
+          \item $c = (c_1, c_m, c_{\sigma_1}, c_{\sigma_m}, c_{\vk})$.
+          \end{enumerate}
+      
+    \end{column}
+
+    \begin{column}{0.5\textwidth}
+      \begin{enumerate}
+      \item Following the idea of $IBE \to CCA$~\cite{DBLP:conf/eurocrypt/CanettiHK04}
+      \item $\sigma_1, \sigma_m$ signatures for the vector $\vec{C}_1 = (1, c_1)$ and $\vec{C}_m = (g,c_m)$. 
+        \begin{enumerate}
+        \item Linear homomorphism $\Rightarrow$ $\vec{C}_1^{w_1} \cdot \vec{C}_m^{w_m}$. 
+
+        \item Verification of $g$ $\Rightarrow$ $w_m = 1$
+
+        \end{enumerate}
+      \item After re-randomization IND-CPA $\to$ unlinkability
+      \end{enumerate}
+    \end{column}
+  \end{columns}
+  
+\end{frame}
+
+
+
+\begin{frame}{Proof intuition}
+  \setbeamercolor{normal text}{fg=gray,bg=}
+  \setbeamercolor{alerted text}{fg=black,bg=}
+  \usebeamercolor{normal text}
+  
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \tiny
+      \alert{
+          {\boldmath{$Enc(\PPP, \PK, m)$}:}          
+          \begin{enumerate}      
+          \item $(\sk_{sig}, \vk_{sig}) \gets \KeyGen(\PPP_{sig})$.
+          \item $ c_m \gets \Enc_{ibe}(\PPP_{ibe}, id = \vk_{sig}, m)$.
+          \item $c_1 \gets \Enc_{ibe}(\PPP_{ibe}, \vk_{sig}, 1_\G)$. 
+          \item $\sigma_1 \gets \Sig_{sig}(\sk_{sig}, (1,c_1))$ and $\sigma_m \gets \Sig_{sig}(\sk_{sig}, (g,c_m))$ 
+          \item $c_{\vk} \gets Enc(\PPP_{enc}, \pk_{enc}, \vk_{sig})$.
+          \item $c_{\sigma_1} \gets Enc(\PPP_{enc}, \pk_{enc}, \sigma_1)$
+          \item $c_{\sigma_m} \gets Enc(\PPP_{enc}, \pk_{enc}, \sigma_m)$
+          \item $c = (c_1, c_m, c_{\sigma_1}, c_{\sigma_m}, c_{\vk})$.
+          \end{enumerate}
+      }
+    \end{column}
+    
+    \begin{column}{0.5\textwidth}
+      Security:
+      \begin{enumerate}
+      \item \alert<+>{Other homomorphism than re-randomization but same $\vk$ $\Rightarrow$ Unforgeability of the signature scheme.}
+      \item \alert<+>{Different $\vk$ but valid ciphertext $\Rightarrow$ security of the IBE scheme.}
+      \end{enumerate}
+
+      \pause
+      
+      Unlinkability:
+      \begin{enumerate}
+      \item \alert<+>{Anonymity of the IBE component.}
+      \item \alert<+>{IND-CPA $\Rightarrow$ Anonymity of the cipher-text.}
+      \end{enumerate}
+    \end{column}
+  \end{columns}
+  
+\end{frame}
+

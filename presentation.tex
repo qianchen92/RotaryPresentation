@@ -1,0 +1,71 @@
+\documentclass{beamer}
+\input{preamble}
+
+\setbeamertemplate{footline}[frame number]
+
+\title{Pr\'esentation des protocoles cryptographiques}
+\author{Chen Qian}
+
+\institute{\'ENS de Rennes, France}
+
+\begin{document}
+
+\selectlanguage{french}
+
+\begin{frame}
+  \maketitle
+\end{frame}
+
+\begin{frame}{Table de mati\`eres}
+  \tableofcontents
+\end{frame}
+
+\begin{section}{Introduction}
+  \input{parcours}
+\end{section}
+
+\begin{section}{Universal Witness Signature(UWS)}
+  
+  \begin{subsection}{Signature}
+    \input{signature}
+  \end{subsection}
+
+  \begin{subsection}{Application de Universal Witness Signature(UWS)}
+    \input{appUWS}
+  \end{subsection}
+
+  \begin{subsection}{Notre Universal Witness Signature}
+    \input{defUWS}
+  \end{subsection}
+
+\end{section}
+
+\begin{section}{Chiffrement re-randomisable RCCA}
+
+  \begin{subsection}{Introduction du chiffrement asymm\'etrique}
+    \input{intro}
+  \end{subsection}
+  
+  \begin{subsection}{Nos Contributions}
+    \input{contribution}
+  \end{subsection}
+
+\end{section}
+
+
+\begin{section}{Th\`ese}
+  \input{thesis}
+\end{section}
+
+
+%\backupbegin
+%\begin{frame}[plain, allowframebreaks,noframenumbering]
+%    \frametitle{References}
+%    \bibliographystyle{apalike}
+%    {\tiny \bibliography{presentation}}
+%\end{frame}
+%\backupend
+
+\end{document}
+
+

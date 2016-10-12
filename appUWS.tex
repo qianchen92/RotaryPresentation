@@ -1,0 +1,49 @@
+\begin{frame}{HIBS: Deleger le droit de signer}
+  \begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+      \node (Master) at (0,0){\includegraphics[width = .1\textwidth]{./images/server.png}};
+      \node (Alice) at (3,0){\includegraphics[width = .1\textwidth]{./images/Alice.png}};
+      \node (Bob) at (6,0){\includegraphics[width = .1\textwidth]{./images/Bob.png}};
+      \node (Public) at (0,3){\includegraphics[width = .2\textwidth]{./images/world.png}};
+      \node (Charlie) at (6,3){\includegraphics[width = .1\textwidth]{./images/Charlie.jpeg}};
+      \path (Master) edge [->] node[above]{$SK_A$} (Alice);
+      \path (Alice) edge [->] node[above]{$SK_B$} (Bob);
+      \path (Master) edge [->] node[left]{$mvk$} (Public);
+      \path ([xshift = -0.3cm]Charlie.south) edge[->] node[left]{message $m$} ([xshift = -0.3cm]Bob.north);
+      \path ([xshift = 0.3cm]Bob.north) edge[->] node[right]{signature $\sigma_{B,m}$} ([xshift = 0.3cm]Charlie.south);
+    \end{tikzpicture}
+  \end{figure}
+
+  Correction: $\sigma_{B,m} = Sig.Sign(SK_B,m)$ et $Sig.Verify(mvk,B,\sigma_{B,m},m) == Vrai$
+\end{frame}
+
+\begin{frame}{Signature redactable: Signer un message partiel}
+  \begin{figure}[H]
+
+    \begin{tikzpicture}
+      
+      \node (TopSecret) at (0,0){\includegraphics[width = 0.3\textwidth]{./images/Top-Secret.jpg}};
+      \node (File) [text width = 3cm,draw,thick,minimum width=1.5cm,minimum height=0.75cm] at (0,0) {32 January 2000, Darth Vader had a dinner with master Yoda.};
+      \node (SignatureInit) [text width = 3cm,draw,thick,minimum width=1.5cm,minimum height=0.75cm]at (0,-2) {Signature valide du fichier initial};
+      \node (File2) [text width = 3cm,draw,thick,minimum width=1.5cm,minimum height=0.75cm] at (6,0) {32 January 2000, Darth Vader had a dinner with \#\#\#\#\#\#\#\#\#.};
+      \node (SignatureFinal)[text width = 3cm,draw,thick,minimum width=1.5cm,minimum height=0.75cm] at (6,-2) {Signature valide du nouveau fichier};
+      \path (SignatureInit) edge[->]node[above]{sans $msk$} (SignatureFinal);
+      
+    \end{tikzpicture}
+
+  \end{figure}
+
+\end{frame}
+
+
+\begin{frame}{Signature propositionnelle: Signer logiquement}
+  \begin{itemize}
+  \item \'Element \`a signer: Formules du calcul propositionnel.
+  \item Propri\'et\'e sp\'eciale de signature propositionnelle : $Delegate(PP, Sig(Prop_A),Prop_A,Prop_B,w_{Prop_A \Rightarrow Prop_B}) = Sig(Prop_B)$
+  \end{itemize}
+
+  Example:
+
+  $(``A", \sigma_{A}) \leadsto (``A\wedge B", \sigma_{A\wedge B})$ 
+\end{frame}

@@ -1,0 +1,127 @@
+
+\begin{frame}{Building blocks}
+  \begin{block}{Three building blocks for our RCCA scheme:}
+    \begin{enumerate}
+    \item (All-But-One) Non-Interactive Zero Knowledge Proof System.
+    \item Structure-Preserving Commitment.
+    \item Linearly Homomorphic Structure-Preserving Signature.
+    \end{enumerate}
+  \end{block}
+\end{frame}
+
+
+
+\begin{frame}{All-But-One Non-Interactive Zero Kowledge Proof System}
+
+  NP language $\mathcal{L}$, instance $x$, witness $w$ such that $x \in_w \mathcal{L}$.
+
+  \textsf{CRS}: Common Reference String.
+
+
+%  \begin{columns}
+%    \begin{column}{0.5\textwidth}
+%      \tiny
+%      \begin{figure}
+%        \begin{centering}
+%          \begin{tikzpicture}
+%            \node (A) at (2,2)[minimum width = 1.5 cm, minimum height  = 1.5cm]{\includegraphics[width = 0.1\textwidth]{images/government.png}};
+%            \node (P) at (0,0)[minimum width = 1.5 cm, minimum height  = 1.5cm]{\includegraphics[width = 0.1\textwidth]{images/Alice.png}};
+%            \node (V) at (4,0)[minimum width = 1.5 cm, minimum height  = 1.5cm]{\includegraphics[width = 0.1\textwidth]{images/Bob.png}};
+%            \pause
+%            \path(A) edge[->] node[above, sloped]{\textsf{CRS}} (P);
+%            \path(A) edge[->] node[above, sloped]{\textsf{CRS}} (V);
+%            \pause
+%            \path ([yshift = 0.5cm] P.east) edge[->] node[above]{Proof $\pi$}([yshift = 0.5cm] V.west);
+%            \pause
+%            \path ([yshift = -0.5cm] P.east) edge[<-] node[above]{ Convinced or Not Convinced}([yshift = -0.5cm] V.west);
+
+  
+  %         \end{tikzpicture}
+  %       \end{centering}
+  %     \end{figure}
+  %   \end{column}
+  %   \begin{column}{0.5\textwidth}
+  %     \tiny
+  %     \begin{enumerate}
+  %     \item (Soundness) No adversary can prove wrong statement
+  %     \item (Zero-knowledge) Know nothing but the fact that the prover has a witness.
+  %     \end{enumerate}
+  %   \end{column}
+  % \end{columns}
+
+  %  \begin{description}
+  
+  %  \end{description}
+
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \begin{itemize}
+      \item $\Setup(\lambda, tag^*) \to CRS$: Generates the common reference string.
+      \item $\Prove(CRS, x, w, tag) \to \pi$: Generates a proof of $x \in \mathcal{L}$ \wrt $tag$.
+      \item $\Verif(CRS, x, \pi, tag) \to \{True, False\}$: Outputs convinced or not.
+      \end{itemize}
+    \end{column}
+    \pause
+    \begin{column}{0.5\textwidth}
+      \begin{enumerate}
+      \item {\color{blue}(All-But-One soundness)} For $x \not \in \mathcal{L}$, no one can generate a acceptable proof such that $tag \neq tag^*$.
+      \item {\color{blue}(Zero-knowledge)} No additional information except $x \in \mathcal{L}$.
+      \end{enumerate}
+    \end{column}
+    
+  \end{columns}
+  
+\end{frame}
+
+
+\begin{frame}{(Structure-Preserving) Commitment}
+
+  \begin{block}{Framework}
+      \begin{itemize}
+      \item $\Setup(\lambda) \to \ck$: Generates commitment key $\ck$.
+      \item $\Com(\ck, m; \open) \to (\com,\open)$: Generates a commitment $\com$ \wrt the randomness $\open$.
+      \item $\Verif(\ck, m, \com, \open) \to \{True, False\}$: Outputs convinced or not.
+      \end{itemize}
+  \end{block}
+
+  \pause
+  
+  \begin{block}{Properties}
+    \begin{itemize}
+      %    \item (Binding) No (PPT)adversary can produce $(m, m', \open, \open', \com)$ \st $\Verif(\ck, m, \com, \open) = \True$ and $\Verif(\ck, m', \com, \open') = \True$ and $m \neq m'$
+      %    \item (Hiding)
+    \item {\color{blue}Correctness} $\Verif(\ck, m, \Com(\ck, m; \open), \open) = \True$.
+    \item {\color{blue}Chosen-Message Target Collision Resistant} Given $\com^*, m^*, \open^*$ a valid commitment. Hard to generate $m$ \st
+      \begin{align*}
+        \Verif(\ck, m, \com^*, \open^*) &= \True \wedge m\neq m^*
+      \end{align*}
+    \end{itemize}
+  \end{block}
+
+\end{frame}
+
+
+\begin{frame}{Linearly Homomorphic Structure-Preserving Signature}
+  \begin{block}{Framework}
+  \begin{itemize}
+  \item $\boldmath{\Setup(\lambda) \to \PPP}$: Generates the public parameter $\PPP$.
+  \item $\boldmath{\KeyGen(\PPP) \to (\SK, \VK)}$: Generates the signing key $\SK$ and the verification key $\VK$.
+  \item $\boldmath{\Sig(\PPP, \SK, \vec{M} = \{\vec{m}_i\}_{i=1}^k) \to \vec{\sigma} = \{\vec{\sigma}_i\}_{i=1}^k}$: Outputs a set of signatures $\vec{\sigma} = \{\vec{\sigma}_i\}_{i=1}^k$.
+  \item $\boldmath{\Verif(\PPP, \VK, \vec{m}, \vec{\sigma}) \to \{\True, \False\}}$
+  \end{itemize}
+  \end{block}
+\end{frame}
+
+\begin{frame}{Linearly Homomorphic Structure-Preserving Signature}
+  \begin{block}{Linearly homomorphic}
+    \begin{enumerate}
+    \item Signatures $\vec{\sigma}_i = (\sigma_{i,1}, \sigma_{i,2}, \sigma_{i,3}) \in \G^3$ of the message $\vec{m}_i = (m_{i,1}, \dots, m_{i,k}) \in \G^k$.
+    \item Random values $\lambda_1, \dots, \lambda_k \in \mathbb{Z}_p$.
+    \item New signature
+      \begin{align*}
+        \vec{\sigma}' &= (\prod_{i = 1}^k \sigma_{i,1}^{\lambda_i}, \prod_{i = 1}^k \sigma_{i,2}^{\lambda_i}, \prod_{i = 1}^k \sigma_{i,2}^{\lambda_i}) & \vec{m}' &= (\prod_{i = 1}^km_{i,1}^{\lambda_i}, \dots, \prod_{i = 1}^km_{i,k}^{\lambda_i})
+      \end{align*}
+    \end{enumerate}
+  \end{block}
+  
+\end{frame}

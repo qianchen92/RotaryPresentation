@@ -1,0 +1,57 @@
+\begin{frame}{Rerandomizable encryption}
+
+  %  \begin{block}{Details of the Encryption algorithm}
+  %    \begin{itemize}
+  %    \item Generate $\vec{C} = (C_0, C_1, C_2) = (MX^{\theta}, g_1^{\theta},  g_2^{\theta})$.
+  %    \item $LHSPS.\KeyGen(\PPP) \to (\SSK, \SVK)$.
+  %    \item $\Com(\ck, \SVK) \to (\com, \open)$.
+  %    \item $\Prove(\PPP_{ABOProof}, x = (C_1, C_2), w = \theta, tag = \com) \to \pi$ of the fact $\exists \chi$ such that $(C_1, C_2) = (g_1^\chi, g_2^\chi)$.
+  %    \item $LHSPS.\Sig(\SVK,((C_0,C_1,C_2, g),\pi)) \to \sigma_m$.
+  %    \item $LHSPS.\Sig(\SVK,((X,g_1,g_2, 1),\pi)) \to \sigma_1$.
+  %    \item $NIZK.\Prove(\PPP, m = (C_1, C_2), w = (\com,\pi)) \to \pi_{com}$
+  %    \item $NIZK.\Prove(\PPP, m = (C_0,C_1,C_2,g), w = (\SVK, \sigma_m)) \to \pi_{\sigma_m}$
+  %    \item $NIZK.\Prove(\PPP, m = (X,g_1,g_2,1), w = (\SVK, \sigma_1)) \to \pi_{\sigma_1}$
+  %    \item Output the ciphertext $(\vec{C},\pi_{com}, \pi_{\sigma_m}, \pi_{\sigma_1}) \in \G^{39} \times \hat{\G}^{20}$.
+  %    \end{itemize}
+  % 
+  %  \end{block}
+
+
+  \begin{columns}
+    \begin{column}{0.5\textwidth}
+      \tiny
+      Structure-Preserving Publicly Verifiable Encryption 
+      \begin{itemize}
+      \item Generate $\vec{C} = (C_0, C_1, C_2) = (MX^{\theta}, g_1^{\theta},  g_2^{\theta})$.
+      \item $\Sig.\KeyGen(\PPP) \to (\SSK, \SVK)$.
+      \item $\Com(\ck, \SVK) \to (\com, \open)$.
+      \item $\Prove(\PPP_{ABOProof}, x = (C_1, C_2), w = \theta, tag = \com) \to \pi$ of the fact $\exists \chi$ such that $(C_1, C_2) = (g_1^\chi, g_2^\chi)$.
+      \item $\Sig(\SSK,(\vec{C},\pi)) \to \sigma$.
+      \item Output the ciphertext $(\vec{C}, \pi, \SVK, \com, \open, \sigma) \in \G^{16} \times \hat{\G}^{11}$.
+      \end{itemize}
+
+    \end{column}
+
+    \begin{column}{0.5\textwidth}
+      \tiny
+      RCCA encryption 
+      \begin{itemize}
+      \item Generate $\vec{C} = (C_0, C_1, C_2) = (MX^{\theta}, g_1^{\theta},  g_2^{\theta})$.
+      \item $LHSPS.\KeyGen(\PPP) \to (\SSK, \SVK)$.
+      \item $\Com(\ck, \SVK) \to (\com, \open)$.
+      \item $\Prove(\PPP_{ABOProof}, x = (C_1, C_2), w = \theta, tag = \com) \to \pi$ of the fact $\exists \chi$ such that $(C_1, C_2) = (g_1^\chi, g_2^\chi)$.
+      \item {\color{red}$LHSPS.\Sig(\SSK,((C_0,C_1,C_2, g),\pi)) \to \sigma_m$.}
+      \item {\color{red}$LHSPS.\Sig(\SSK,((X,g_1,g_2, 1),\pi)) \to \sigma_1$.}
+        {\color{blue}
+        \item $NIZK.\Prove(\PPP, m = (C_1, C_2), w = (\com,\pi)) \to \pi_{com}$
+        \item $NIZK.\Prove(\PPP, m = (\SVK), w = (\com, \open)) to \pi_{\SVK}$
+        \item $NIZK.\Prove(\PPP, m = (C_0,C_1,C_2,g), w = (\SVK, \sigma_m)) \to \pi_{\sigma_m}$
+        \item $NIZK.\Prove(\PPP, m = (X,g_1,g_2,1), w = (\SVK, \sigma_1)) \to \pi_{\sigma_1}$
+        }
+        
+      \item Output the ciphertext $(\vec{C},\pi_{com},\pi_{\SVK}, \pi_{\sigma_m}, \pi_{\sigma_1}) \in \G^{39} \times \hat{\G}^{20}$.
+      \end{itemize}
+ 
+    \end{column}
+  \end{columns}
+\end{frame}
