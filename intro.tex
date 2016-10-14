@@ -1,53 +1,8 @@
-\begin{frame}{Chiffrement \`a clef publique}
-
-  Chiffrement asymm\'etrique (Example: sch\'ema de chiffrement ElGamal)
-
-  $\G$ un group d'ordre premier $p$, $(g, m) \in \G^2$ et $(a,r) \sample \mathbb{Z}_p^2$.  
-  \begin{figure}
-    \tiny
-    \begin{centering}
-      \begin{tikzpicture}
-        \node (E) at (0,0)[minimum width = 1.5 cm, minimum height = 1.5cm]{\includegraphics[width = 0.1\textwidth]{images/Alice.png}};
-        \node (D) at (5,0)[minimum width = 1.5 cm, minimum height = 1.5cm]{\includegraphics[width = 0.1\textwidth]{images/Bob.png}}; 
-
-        \pause
-        
-        \node (ke)[text width = 3.5cm, text centered] at (0,1.5){Clef de chiffrement $\PK = g^a$};
-        \path (ke) edge [->] (E.north);
-
-        \node (kd) at (5,1.5){Clef de d\'echiffrement $\SK = a$};
-        \path (kd) edge [->] (D.north);
-        
-        \pause
-        \node (m) at (-2.5,0.5){Message $m$};
-        \path (m) edge [->] ([yshift = 0.5cm]E.west);
-        \node (r) at (-2.5,-0.5){Al\'eatoire $r$};
-        \path (r) edge [->] ([yshift = -0.5cm]E.west);
-
-        \pause
-
-        \path (E) edge[->] node[above]{$C = (C_1, C_2) = \{g^r, m \cdot g^{ar}\}$}(D);
-        
-        \pause
-        
-        \node (m2) at (5,-1.5){Message d\'echiffr\'e $m$};
-        \path (D) edge [->] (m2);
-        
-      \end{tikzpicture}
-    \end{centering}
-  \end{figure}
-
-  \pause
-  \visible<5->{{\color{blue} \emph{Correction}: } $Dec(\SK, Enc(\PK, m, r)) = m$}
-  \pause
-  \visible<6->{{\color{blue} \emph{IND-CPA(Indistinguishable Chosen-Plaintext Attack)}: } $(m_0, m_1, Enc(\PK, m_0, r_0)) \approx_c (m_0, m_1, Enc(\PK, m_1, r_1))$}
-  
-\end{frame}
 
 
 \begin{frame}{Chiffrement re-randomizable}
 
-  Example: Chiffrement ElGamal
+  Exemple: Chiffrement ElGamal
   
   \begin{figure}
     \tiny
@@ -63,7 +18,7 @@
         
         \node (m) at (-2.5,0.5){Message $m$};
         \path (m) edge [->] ([yshift = 0.5cm]E.west);
-        \node (r) at (-2.5,-0.5){Al\'eatoire $r$};
+        \node (r) at (-2.5,-0.5){Al\'ea $r$};
         \path (r) edge [->] ([yshift = -0.5cm]E.west);
 
         \pause
@@ -121,7 +76,7 @@
 
 \begin{frame}{Syst\`eme de vote sans re\c{c}u}
 
-  Example: ElGamal
+  Exemple: ElGamal
 
   \begin{figure}
     \tiny

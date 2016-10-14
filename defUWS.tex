@@ -1,40 +1,59 @@
+\begin{frame}{G\'en\'eralisation des protocoles pr\'ec\'edents}
+  \begin{figure}
+    \begin{tikzpicture}
+      \node (bot)  at (0,0) {$\bot$};
+      \node (A) at (-2,-2) {Proposition $A$, $\SK_{A}$};
+      \node (B) at (2,-2) {Proposition $B$, $\SK_{B}$};
+      \node (C) at (-4, -4) {Proposition $C$, $\SK_{C}$};
+      \path (bot) edge [->] (A);
+      \path (bot) edge [->] (B);
+      \path (A) edge [->] (C);
+    \end{tikzpicture}
+  \end{figure}
+\end{frame}
+
+
+
+
+
 \begin{frame}{D\'efinition de Universal Witness Signature}
   \begin{block}{D\'efinition}
-    Une Universal Witness Signature par rapport \`a un relation pre-order $Ord$(qui poss\`ede un plus grand element $*$) est un paire  d'algorithmes $(Setup, Delegate)$ qui v\'erifie les sp\'ecifications suivantes:
+    Une Universal Witness Signature par rapport \`a un relation pre-order $Ord$ (qui poss\`ede un plus grand element $*$) est une paire d'algorithmes $(Setup, Delegate)$ qui v\'erifie les sp\'ecifications suivantes :
     \begin{itemize}
     \item $Setup(1^\lambda) \to (PP,SK_*)$: G\'en\'erer un param\`etre publique $PP$ et une clef de signature $SK_*$.
-    \item $Delegate(PP, SK_A, A, B, w) \to SK_B$: Si $SK_A$ est une clef de signature valid de $A$ et $w$ est un t\'emoin de $B\leq A$, alors l'algorithme retournera $SK_B$, sinon il retournera $\bot$.
+    \item $Delegate(PP, SK_A, A, B, w) \to SK_B$: Si $SK_A$ est une clef de signature valide de $A$ et $w$ est un t\'emoin de $B\leq A$, alors l'algorithme retournera $SK_B$, sinon il retournera $\bot$.
     \end{itemize}
   \end{block}
 \end{frame}
 
-\begin{frame}{Remarques}
+%\begin{frame}{Remarques}
+ %
+ % \begin{tabular}{|c|c|c|}
+ %   \hline
+ %   & Sch\'ema classique de  & Sch\'ema UWS\\
+ %   & signature hi\'erarchique & \\
+ %   \hline
+ %   Identit\'e  & $Id = (id_1, \dots, id_k)$ & $Id = id_k$\\
+ %   \hline
+ %   Clef de signature &  $SK_{ID}$ & $SK_{ID}$\\
+ %   \hline
+ %   Message  & $M = (id_1, \dots, id_k, m)$ & $M = m$ \\
+ %   \hline
+ %   Signature & $\sigma_m$ & $SK_m$\\
+ %   \hline
+ % \end{tabular}
+ %
+ % \begin{block}{}
+ %   Algorithme de v\'erification :
+ %   $$Verify(PP, m, \sigma_m)  =  Delegate(PP,SK_m,m,m, ``\forall x. x\leq x")$$
+ % \end{block}
+%\end{frame}
 
-  \begin{tabular}{|c|c|c|}
-    \hline
-    & Sch\'ema classique de  & Sch\'ema UWS\\
-    & signature hi\'erarchique & \\
-    \hline
-    Identit\'e  & $Id = (id_1, \dots, id_k)$ & $Id = id_k$\\
-    \hline
-    Clef de signature &  $SK_{ID}$ & $SK_{ID}$\\
-    \hline
-    Message  & $M = (id_1, \dots, id_k, m)$ & $M = m$ \\
-    \hline
-    Signature & $\sigma_m$ & $SK_m$\\
-    \hline
-  \end{tabular}
-
-  \begin{block}{}
-    Algorithme de v\'erification :
-    $$Verify(PP, m, \sigma_m)  =  Delegate(PP,SK_m,m,m, ``\forall x. x\leq x")$$
-  \end{block}
-\end{frame}
 
 
 \begin{frame}{Contributions}
   \begin{enumerate}
-  \item G\'en\'eralisation de plusieurs notions de signatures mall\'eables.
+  \item G\'en\'eralisation de plusieurs notions de sch\'ema de signatures.
   \item Premi\`ere construction de signature propositionnelle.
   \end{enumerate}
 

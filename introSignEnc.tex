@@ -1,0 +1,105 @@
+\begin{frame}{Signature Cryptographique}
+  \begin{figure}
+    \includegraphics[width=.5\textwidth]{./images/signature.jpg}
+  \end{figure}
+\end{frame}
+
+
+\begin{frame}{Introduction : Cryptographie}
+  Prot\'eger notre vie, outi puissant pour la s\'ecurit\'e :
+  \begin{itemize}
+  \item Authenticit\'e et int\'egralit\'e (Signature etc.)
+  \item Confidentialit\'e (Chiffrement etc.)
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Introduction : Signature}
+  \begin{figure}
+    \tiny
+    \begin{centering}
+      \begin{tikzpicture}
+        \node (E) at (0,0)[minimum width = 1.5 cm, minimum height = 1.5cm]{\includegraphics[width = 0.1\textwidth]{images/Alice.png}};
+        \node (D) at (5,0)[minimum width = 1.5 cm, minimum height = 1.5cm]{\includegraphics[width = 0.1\textwidth]{images/Bob.png}}; 
+
+        \pause
+        
+        \node (ke)[text width = 3.5cm, text centered] at (0,1.5){Clef de signature};
+        \path (ke) edge [->] (E.north);
+
+        \node (kd) at (5,1.5){Clef de v\'erification};
+        \path (kd) edge [->] (D.north);
+        
+        \pause
+        \node (m) at (-2.5,0){Message $m$};
+        \path (m) edge [->] (E);
+
+        \pause
+
+        \path (E) edge[->] node[above]{Signature $\sigma$}(D);
+        
+        \pause
+        
+        \node (m2) at (5,-1.5){Vrai ou Faux};
+        \path (D) edge [->] (m2);
+        
+      \end{tikzpicture}
+    \end{centering}
+  \end{figure}
+  
+  
+
+  \visible<6->{Un sch\'ema de signature $Sig = (KeyGen, Sign, Verify)$.}
+  
+
+  \visible<7->{Correction : $(sk, vk) \gets KeyGen(\lambda)$, $Verify(vk, Sign(sk, m)) = Vrai$}
+  
+
+\end{frame}
+
+
+\begin{frame}{Introduction : Chiffrement \`a clef publique}
+
+  Chiffrement asymm\'etrique (Exemple: sch\'ema de chiffrement ElGamal)
+
+  $\G$ un groupe d'ordre premier $p$, $(g, m) \in \G^2$ et $(a,r) \sample \mathbb{Z}_p^2$.  
+  \begin{figure}
+    \tiny
+    \begin{centering}
+      \begin{tikzpicture}
+        \node (E) at (0,0)[minimum width = 1.5 cm, minimum height = 1.5cm]{\includegraphics[width = 0.1\textwidth]{images/Alice.png}};
+        \node (D) at (5,0)[minimum width = 1.5 cm, minimum height = 1.5cm]{\includegraphics[width = 0.1\textwidth]{images/Bob.png}}; 
+
+        \pause
+        
+        \node (ke)[text width = 3.5cm, text centered] at (0,1.5){Clef de chiffrement $\PK = g^a$};
+        \path (ke) edge [->] (E.north);
+
+        \node (kd) at (5,1.5){Clef de d\'echiffrement $\SK = a$};
+        \path (kd) edge [->] (D.north);
+        
+        \pause
+        \node (m) at (-2.5,0.5){Message $m$};
+        \path (m) edge [->] ([yshift = 0.5cm]E.west);
+        \node (r) at (-2.5,-0.5){Al\'ea $r$};
+        \path (r) edge [->] ([yshift = -0.5cm]E.west);
+
+        \pause
+
+        \path (E) edge[->] node[above]{$C = (C_1, C_2) = \{g^r, m \cdot g^{ar}\}$}(D);
+        
+        \pause
+        
+        \node (m2) at (5,-1.5){Message d\'echiffr\'e $m$};
+        \path (D) edge [->] (m2);
+        
+      \end{tikzpicture}
+    \end{centering}
+  \end{figure}
+
+  \pause
+  \visible<5->{{\color{blue} \emph{Correction}: } $Dec(\SK, Enc(\PK, m, r)) = m$}
+  \pause
+  \visible<6->{{\color{blue} \emph{IND-CPA(Indistinguishable Chosen-Plaintext Attack)}: } $(m_0, m_1, Enc(\PK, m_0, r_0)) \approx_c (m_0, m_1, Enc(\PK, m_1, r_1))$}
+  
+\end{frame}
